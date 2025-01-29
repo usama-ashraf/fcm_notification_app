@@ -24,6 +24,10 @@ class FCMNotificationService
       }
     when 'ios'
       message['apns'] = {
+        headers: {
+          'apns-priority': '10',
+          'apns-expiration': "#{Time.now.to_i + 3600}"
+        },
         payload: {
           aps: {
             alert: {
@@ -31,12 +35,9 @@ class FCMNotificationService
               body: body
             },
             sound: 'default',
-            badge: 1
+            badge: 1,
+            content_available: true
           }
-        },
-        headers: {
-          'apns-priority': '10',
-          'apns-expiration': "#{Time.now.to_i + 3600}"
         }
       }
     else
